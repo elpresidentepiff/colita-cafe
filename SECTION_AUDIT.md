@@ -52,27 +52,11 @@ Unit economics Gross margin is strong. Contribution margin is unmodelled. Cost p
 
 `<section>`
 
-**Numbers:** 01 $75 150 02 2 03
-
-Business model Stop buying coffee. Start commissioning it. Three revenue lines off one production capability, ordered by how quickly each can reach revenue. Line 01 Bio-Concierge subscription Consultation, custom protocol design, laboratory verification, recurring delivery. Target $75–150 per customer per month. Line 02 B2B white-label Protocol production for premium London cafés and wellness brands who want a differentiated lot they cannot engineer themselves. Line 03 Extract licensing High-concentration CGA extract supplied to functional food and beverage manufacturers. The natural home for ultrasound-assisted extraction. Already selling Colita green lots presented at retail with per-lot c
-
-## Section 8
-
-`<section>`
-
-**Numbers:** £21 £43 100 8 000
-
-Why London first The densest specialty market that will pay for chemistry. Specialty density — the UK's deepest concentration of independent roasters and third-wave buyers Proven price tolerance — £21–£43 per 100 g already clears in this market Functional beverage appetite — a consumer base already buying for effect, not only flavour Colombian origin advantage — direct farm access is a genuine and defensible moat Groundwork already built A complete UK operating system exists in the unroast-brand-os repository: food business registration, traceability and recall policy, COA requirements, batch release records, claims governance against the GB Nutrition and Health Claims Register, and a London
-
-## Section 9
-
-`<section>`
-
 **Numbers:** 35 35
 
 Where we are This is an operating exporter, not a concept. Colita already grows, processes, cups, bags and ships differentiated coffee under its own export marks. The missing piece is not the business — it is the instrumental evidence for what the process does to the chemistry. Own export marks · Black Honey · Yellow Honey · Red Bourbon · Huila · 35 kg · direct trade Read the sacks Named process lots, already shipping. Black Honey and Yellow Honey are distinct fermentation and drying regimes, bagged separately under the Café de Colita mark and moving as direct trade. The shipping cartons behind them carry Asian consignee labels. A producer that cannot control fermentation cannot separate a B
 
-## Section 10
+## Section 8
 
 `<section>`
 
@@ -80,7 +64,7 @@ Where we are This is an operating exporter, not a concept. Colita already grows,
 
 The ask To be completed. This section needs an amount, a use of funds, and the milestones the round buys. Everything above is built to support it — but a deck that reaches this point and stops is a deck that does not close. Suggested structure Amount and instrument — equity, SAFE, or convertible Use of funds split across lab verification, inventory, London operations, and demand Milestones the round buys — first COA, first B2B account, first 100 subscribers Runway and the metric that triggers the next raise
 
-## Section 11
+## Section 9
 
 `<section id="research-science">`
 
@@ -88,7 +72,7 @@ The ask To be completed. This section needs an amount, a use of funds, and the m
 
 Research / Coffee Chemistry Beyond flavour: the chemistry inside coffee. Colita's research programme follows the molecules, processing variables and extraction technologies that sit behind coffee quality — from chlorogenic acids and trigonelline to fermentation ecology and assisted extraction. Human cohort Imperial College London / EPIC A 2017 European cohort of more than 500,000 people across 10 countries found higher coffee consumption was associated with lower all-cause mortality. The study was observational: it establishes an association, not proof that coffee causes longer life. Imperial College London · Annals of Internal Medicine · 2017 Emerging biology Trigonelline → NAD+ pathway Nat
 
-## Section 12
+## Section 10
 
 `<section id="revenue-platform">`
 
@@ -96,7 +80,7 @@ Research / Coffee Chemistry Beyond flavour: the chemistry inside coffee. Colita'
 
 Commercial Platform / One Bean One bean. Multiple revenue paths. The green bean is not a single finished product. Selection, processing, format and extraction create several distinct commercial routes from the same coffee knowledge base. Core Curated green lots Traceable coffees selected for quality, provenance, variety and buyer fit — supplied as green coffee for specialty customers. Core Made-to-order coffee Buyers define a sensory direction; we design the processing and fermentation route around the target rather than asking them to choose only from a fixed catalogue. Core Fermentation development Controlled and prolonged fermentation protocols developed around origin, coffee material and
 
-## Section 13
+## Section 11
 
 `<section id="recognition-track-record">`
 
@@ -104,7 +88,7 @@ Commercial Platform / One Bean One bean. Multiple revenue paths. The green bean 
 
 Track Record / Independent Evidence Years of work before the pitch. The archive shows practical coffee work, professional profiling and export preparation alongside the research programme. Featured Perfect Daily Grind Steven Restrepo, Head of Coffee at Café de Colita, was interviewed by Perfect Daily Grind for industry perspective on infused and flavoured coffee processing — alongside voices including Saša Šestić of ONA Coffee / Project Origin. Independent specialty-coffee media recognition Archive · 2019 Professional cupping & profiling Historical records with Cony Perez document repeated cupping and profiling work across Colombian coffees, including June 2019 results for 10 cuppings and la
 
-## Section 14
+## Section 12
 
 `<section id="fermentists-people">`
 
