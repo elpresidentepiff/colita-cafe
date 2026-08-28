@@ -31,5 +31,7 @@ jobs:
             echo "No site changes required"
             exit 0
           fi
-          git commit -m "Refresh Colita site: science, track record and live indexing"
+          git commit -m "Final Colita cleanup and public indexing"
           git push
+
+# Final live cleanup trigger: 2026-08-28
