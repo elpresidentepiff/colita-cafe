@@ -17,16 +17,18 @@ jobs:
           ref: site-expansion-2026
       - name: Apply site patch
         run: python3 scripts/patch_site_2026.py
+      - name: Remove obsolete commercial sections
+        run: python3 scripts/remove_legacy_commercial_sections.py
       - name: Audit all sections
         run: python3 scripts/audit_sections.py
       - name: Commit patched site and audit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html SITE_EXPANSION_REPORT.md SECTION_AUDIT.md
+          git add index.html SITE_EXPANSION_REPORT.md SECTION_AUDIT.md LEGACY_SECTION_REMOVAL.md
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Audit Colita site sections [site-expansion-applied]"
+            git commit -m "Remove legacy pricing and expand Colita evidence [site-expansion-applied]"
             git push origin HEAD:site-expansion-2026
           fi
