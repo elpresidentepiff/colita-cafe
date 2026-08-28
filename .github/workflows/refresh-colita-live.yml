@@ -1,0 +1,200 @@
+name: Refresh Colita live site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-colita-live.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    if: github.event.head_commit.message == 'Add Colita site refresh workflow'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Refresh site content
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          html = p.read_text(encoding='utf-8')
+
+          # Make the public site indexable.
+          html = re.sub(r'\s*<meta\s+name="robots"[^>]*>\s*', '\n', html, flags=re.I)
+          html = re.sub(r'\s*<meta\s+name="googlebot"[^>]*>\s*', '\n', html, flags=re.I)
+
+          # Remove the investor gross-margin / contribution-margin section.
+          html = re.sub(
+              r'(?is)\s*<!--\s*=+\s*ECONOMICS\s*=+\s*-->\s*<section\b.*?</section>\s*',
+              '\n', html, count=1
+          )
+          html = re.sub(
+              r'(?is)<section\b[^>]*>.*?Gross margin is strong\. Contribution margin is unmodelled\..*?</section>',
+              '', html, count=1
+          )
+
+          # Remove the old retail-price comparison block if it is still present.
+          for pattern in (
+              r'(?is)<section\b[^>]*>.*?(?:£|&pound;)\s*5\.90.*?(?:21\s*[–-]\s*80\+?|(?:£|&pound;)\s*80\+?).*?</section>',
+              r'(?is)<div\b[^>]*>.*?(?:£|&pound;)\s*5\.90.*?(?:21\s*[–-]\s*80\+?|(?:£|&pound;)\s*80\+?).*?</div>'
+          ):
+              html = re.sub(pattern, '', html, count=1)
+
+          # Remove Shoot/Shot 1–4 planning placeholders, not real photography.
+          html = re.sub(
+              r'(?is)<section\b[^>]*>.*?(?:shoot|shot)\s*0?1\b.*?(?:shoot|shot)\s*0?2\b.*?(?:shoot|shot)\s*0?3\b.*?(?:shoot|shot)\s*0?4\b.*?</section>',
+              '', html, count=1
+          )
+          for n in range(1, 5):
+              html = re.sub(
+                  rf'(?is)<(?:div|figure)\b[^>]*class="[^"]*(?:shot-frame|shoot-card)[^"]*"[^>]*>.*?(?:shoot|shot)\s*0?{n}\b.*?</(?:div|figure)>',
+                  '', html, count=1
+              )
+
+          # Avoid duplicate injection if this workflow is ever re-run manually.
+          html = re.sub(r'(?is)\s*<!-- COLITA EXPANSION START -->.*?<!-- COLITA EXPANSION END -->\s*', '\n', html)
+
+          expansion = r'''
+<!-- COLITA EXPANSION START -->
+<section id="science" class="section-divider">
+  <div class="wrap stack-lg">
+    <div class="narrow stack">
+      <p class="eyebrow">Research / Science</p>
+      <h2>Coffee is chemistry before it is a beverage.</h2>
+      <p class="lead">Our processing work sits beside a growing body of independent research into green-coffee bioactives, fermentation and the chemistry changed by roasting. We use the literature to ask better production questions — not to turn research findings into unsupported product claims.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card stack">
+        <h3>Imperial College London · EPIC</h3>
+        <p>A large European prospective cohort of more than half a million participants associated higher coffee consumption with lower all-cause mortality and lower mortality from some circulatory and digestive causes. It was observational evidence, not proof of causation.</p>
+        <p class="note"><a href="https://www.imperial.ac.uk/news/180494/drinking-coffee-reduces-risk-death-from/" target="_blank" rel="noopener">Imperial College London · 2017</a></p>
+      </article>
+      <article class="card stack">
+        <h3>Trigonelline · NAD+ biology</h3>
+        <p>A 2024 <em>Nature Metabolism</em> study identified trigonelline as an NAD+ precursor, linked circulating trigonelline with muscle and mitochondrial measures in human cohorts, and tested mechanisms across human cells and preclinical models.</p>
+        <p class="note"><a href="https://www.nature.com/articles/s42255-024-00997-x" target="_blank" rel="noopener">Nature Metabolism · 2024</a></p>
+      </article>
+      <article class="card stack">
+        <h3>Chlorogenic acids · the green-bean family</h3>
+        <p>CGAs are a family of coffee polyphenols, with 5-CQA commonly dominant. Their profile changes materially with roasting, which is why green coffee is analytically interesting in its own right.</p>
+        <p class="note">Colita research archive includes green-coffee, CGA, fermentation and processing literature assembled over multiple years.</p>
+      </article>
+      <article class="card stack">
+        <h3>Fermentation research</h3>
+        <p>Controlled post-harvest fermentation can change precursor chemistry, microbial activity and sensory outcomes. For us, fermentation is a production variable to be designed, measured and repeated — not simply a label on a bag.</p>
+      </article>
+      <article class="card stack">
+        <h3>Ultrasound-assisted extraction</h3>
+        <p>UAE uses acoustic cavitation and microstreaming to increase mass transfer. Time, temperature, particle size, extraction medium, power and solid-to-liquid ratio determine what is recovered and how reproducibly.</p>
+      </article>
+      <article class="card stack">
+        <h3>Beyond caffeine</h3>
+        <p>Coffee contains a large molecular library under active study: trigonelline, chlorogenic acids, caffeine, caffeic acid, cafestol, kahweol, polysaccharides, tocopherols and other minor compounds. Different fractions require different extraction and analytical strategies.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="origin" class="section-divider">
+  <div class="wrap stack-lg">
+    <div class="narrow stack">
+      <p class="eyebrow">Fermentists of Origin™</p>
+      <h2>Carlos Andrés — the origin side of the work.</h2>
+      <p class="lead">Carlos Andrés represents the producer-side knowledge and fermentation practice behind Fermentists of Origin™. His full story, in his own words and with the details that matter, will be added here directly rather than invented around him.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card stack"><h3>At origin</h3><p>Coffee decisions begin before export: cherry selection, process choice, time, temperature, environment, drying and lot separation.</p></article>
+      <article class="card stack"><h3>Process library</h3><p>Anaerobic, lactic, whisky/rum/tequila-infused, natural fruit or botanical-infused, triple-washed, honey and natural processing — developed according to the intended cup.</p></article>
+      <article class="card stack"><h3>Made to brief</h3><p>The aim is not novelty for novelty's sake. It is a repeatable sensory target built from origin forward.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="revenue" class="section-divider">
+  <div class="wrap stack-lg">
+    <div class="narrow stack">
+      <p class="eyebrow">One bean / multiple revenue paths</p>
+      <h2>We do not have to monetise coffee only once.</h2>
+      <p class="lead">The same origin capability can serve buyers at different stages of the value chain — from curated green lots to designed processing, finished formats, extracts and technical development.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card stack"><h3>Curated green coffee</h3><p>Selected Colombian lots sourced by cup, variety, process, provenance and buyer brief.</p><span class="chip chip-verified">Current capability</span></article>
+      <article class="card stack"><h3>Made-to-order coffee</h3><p>Buyer defines the target profile; process variables are designed at origin around the desired result.</p><span class="chip chip-verified">Core model</span></article>
+      <article class="card stack"><h3>Fermentation-developed lots</h3><p>Controlled experimental and prolonged-processing coffees for specialty buyers seeking differentiated profiles.</p><span class="chip chip-verified">Core capability</span></article>
+      <article class="card stack"><h3>Ground &amp; format-ready</h3><p>Finished coffee formats can extend the value chain beyond raw green-bean supply where the commercial brief supports it.</p><span class="chip chip-target">Commercial lane</span></article>
+      <article class="card stack"><h3>Bioactive extracts</h3><p>Green-coffee extraction focused on measurable compounds such as chlorogenic acids and trigonelline, with caffeine controlled and disclosed.</p><span class="chip chip-target">Development</span></article>
+      <article class="card stack"><h3>Fractionation</h3><p>CGA-rich, trigonelline-rich and controlled-caffeine fractions are an R&amp;D path toward specification-led ingredient supply.</p><span class="chip chip-gap">R&amp;D</span></article>
+      <article class="card stack"><h3>Process development</h3><p>Fermentation and extraction trials for coffee companies that need origin-side development rather than an off-the-shelf bean.</p><span class="chip chip-target">Development</span></article>
+      <article class="card stack"><h3>Private label / formulation</h3><p>Selected outputs can become partner products where specification, compliance and manufacturing are established.</p><span class="chip chip-gap">Future lane</span></article>
+      <article class="card stack"><h3>Process IP &amp; licensing</h3><p>Where a genuinely novel, reproducible process is demonstrated, process know-how may become licensable intellectual property.</p><span class="chip chip-gap">Future lane</span></article>
+    </div>
+  </div>
+</section>
+
+<section id="track-record" class="section-divider">
+  <div class="wrap stack-lg">
+    <div class="narrow stack">
+      <p class="eyebrow">Track record / archive</p>
+      <h2>The work existed before the deck.</h2>
+      <p class="lead">Archived operating records document sourcing, cupping, export preparation and experimental profile development going back to 2018.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card stack">
+        <h3>Structured cupping · 2019</h3>
+        <p>Archived May–September records contain repeated cupping rounds across Colombian producers and varieties, including Gesha, Bourbon, Pink Bourbon, Castillo and experimental/natural lots. Recorded scores include multiple mid-80s lots and an archived profile at 88.25.</p>
+      </article>
+      <article class="card stack">
+        <h3>Experimental profiles · 2021</h3>
+        <p>Archived profile sheets document work across whisky, pineapple, natural, mint, passion fruit, apple, lactic, bubblegum and cinnamon profiles — evidence of a broad experimental processing programme rather than a single showcase lot.</p>
+      </article>
+      <article class="card stack">
+        <h3>London samples · 2021</h3>
+        <p>Archived FedEx and FNC paperwork records a 12 kg coffee sample shipment to London. A separate 2021 archive also contains a proposal prepared for Planet Organic.</p>
+      </article>
+      <article class="card stack">
+        <h3>Industry recognition</h3>
+        <p>Café de Colita's fermentation perspective was cited by <em>Perfect Daily Grind</em> in its coverage of infused and co-fermented coffee processing.</p>
+        <p class="note"><a href="https://perfectdailygrind.com/2023/11/infused-co-fermented-coffee-differences/" target="_blank" rel="noopener">Perfect Daily Grind · 2023</a></p>
+      </article>
+      <article class="card stack">
+        <h3>Cup of Excellence · Experimental</h3>
+        <p>Cup of Excellence competitions in multiple origins now include Experimental categories, giving advanced processing a formal competition lane. We treat that as market validation for serious process innovation — not as a claim that Colita has won a COE award.</p>
+        <p class="note"><a href="https://allianceforcoffeeexcellence.org/" target="_blank" rel="noopener">Alliance for Coffee Excellence</a></p>
+      </article>
+      <article class="card stack">
+        <h3>Research archive</h3>
+        <p>Colita's Drive archive includes fermentation literature, green-coffee/CGA research, bioactive-compound web content, supplier databases, farm sheets and historic trade material. The operating history and research history can now be presented together.</p>
+      </article>
+    </div>
+    <p class="note">Evidence note: archived cupping records are operating/partner records and are not presented as competition scores. Research cited above is independent scientific literature and does not establish efficacy of a Colita product.</p>
+  </div>
+</section>
+<!-- COLITA EXPANSION END -->
+'''
+
+          # Insert before the footer when possible, otherwise before body close.
+          if '</main>' in html:
+              html = html.replace('</main>', expansion + '\n</main>', 1)
+          elif '<footer' in html:
+              html = html.replace('<footer', expansion + '\n<footer', 1)
+          else:
+              html = html.replace('</body>', expansion + '\n</body>', 1)
+
+          p.write_text(html, encoding='utf-8')
+          Path('robots.txt').write_text('User-agent: *\nAllow: /\n', encoding='utf-8')
+
+      - name: Commit refreshed live site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html robots.txt
+          git commit -m "Refresh Colita site: science, track record and live indexing"
+          git push
