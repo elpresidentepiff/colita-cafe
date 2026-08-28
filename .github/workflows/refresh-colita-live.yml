@@ -31,7 +31,7 @@ jobs:
             echo "No site changes required"
             exit 0
           fi
-          git commit -m "Final Colita cleanup and public indexing"
+          git commit -m "Elevate coffee chemistry and research education"
           git push
 
-# Final live cleanup trigger: 2026-08-28
+# Chemistry + research education live refresh trigger: 2026-08-28 17:57 BST
