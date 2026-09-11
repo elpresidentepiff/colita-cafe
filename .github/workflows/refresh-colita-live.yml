@@ -9,6 +9,7 @@ on:
       - 'tools/refresh_site.py'
       - 'tools/restore_design.py'
       - 'tools/add_my_lot.py'
+      - 'tools/correct_my_lot_offer.py'
 
 permissions:
   contents: write
@@ -27,6 +28,7 @@ jobs:
           python tools/refresh_site.py
           python tools/restore_design.py
           python tools/add_my_lot.py
+          python tools/correct_my_lot_offer.py
 
       - name: Commit refreshed site
         run: |
