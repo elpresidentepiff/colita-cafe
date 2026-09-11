@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/refresh-colita-live.yml'
       - 'tools/refresh_site.py'
+      - 'tools/restore_design.py'
       - 'tools/add_my_lot.py'
 
 permissions:
@@ -24,6 +25,7 @@ jobs:
       - name: Refresh site
         run: |
           python tools/refresh_site.py
+          python tools/restore_design.py
           python tools/add_my_lot.py
 
       - name: Commit refreshed site
