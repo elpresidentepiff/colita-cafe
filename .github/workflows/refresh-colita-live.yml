@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - '.github/workflows/refresh-colita-live.yml'
+      - 'tools/refresh_site.py'
+      - 'tools/add_my_lot.py'
 
 permissions:
   contents: write
@@ -20,7 +22,9 @@ jobs:
           fetch-depth: 0
 
       - name: Refresh site
-        run: python tools/refresh_site.py
+        run: |
+          python tools/refresh_site.py
+          python tools/add_my_lot.py
 
       - name: Commit refreshed site
         run: |
@@ -31,7 +35,7 @@ jobs:
             echo "No site changes required"
             exit 0
           fi
-          git commit -m "Elevate coffee chemistry and research education"
+          git commit -m "Refresh Colita live site"
           git push
 
-# Chemistry + research education live refresh trigger: 2026-08-28 17:57 BST
+# My Lot Coffee live refresh trigger: 2026-09-11
